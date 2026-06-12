@@ -18,9 +18,10 @@ export default function Home() {
     const handleUploadComplete = async (base64Image: string) => {
         const newId = Date.now().toString();
 
-        navigate(`/visualizer/${newId}`);
+        // Store the image data so the visualizer route can access it
+        localStorage.setItem(`floor-plan-${newId}`, base64Image);
 
-        return true;
+        navigate(`/visualizer/${newId}`);
     }
 
     return (

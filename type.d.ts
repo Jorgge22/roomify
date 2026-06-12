@@ -1,4 +1,4 @@
-interface AuthState {
+export interface AuthState {
     isSignedIn: boolean;
     userName: string | null,
     userId: string | null,

@@ -1,5 +1,6 @@
-import React, {use, useCallback, useState} from 'react'
+import React, {useCallback, useState} from 'react'
 import {useOutletContext} from "react-router";
+import type {AuthContext} from "../type";
 import {CheckCircle2, ImageIcon, UploadIcon} from "lucide-react";
 import {PROGRESS_INCREMENT, PROGRESS_INTERVAL_MS, REDIRECT_DELAY_MS} from "../lib/constants";
 
@@ -21,6 +22,13 @@ const Upload = ({onComplete}: UploadProps) => {
         setProgress(0);
 
         const reader = new FileReader();
+
+        reader.onerror = () => {
+            console.error('Failed to read file');
+            setFile(null);
+            setProgress(0);
+        };
+
         reader.onloadend = () => {
             const base64Data = reader.result as string;
 
@@ -58,7 +66,8 @@ const Upload = ({onComplete}: UploadProps) => {
         if (!isSignedIn) return;
 
         const droppedFile = e.dataTransfer.files[0];
-        if (droppedFile && droppedFile.type.startsWith('image/')) {
+        const allowedTypes = ['image/jpeg', 'image/png'];
+        if (droppedFile && allowedTypes.includes(droppedFile.type)) {
             processFile(droppedFile);
         }
     };
@@ -79,7 +88,7 @@ const Upload = ({onComplete}: UploadProps) => {
                     <input
                         type="file"
                         className="drop-input"
-                        accept=".jpg, .jpeg, .png"
+                        accept="image/*"
                         onChange={handleChange}
                         disabled={!isSignedIn}
                     />
@@ -91,10 +100,10 @@ const Upload = ({onComplete}: UploadProps) => {
                         <p>
                             {isSignedIn ? (
                                 "Click to upload or just drag and drop"
-                            ) : ("Sign in or sing up with Puter to upload")}
+                            ) : ("Sign in or sign up with Puter to upload")}
                         </p>
                         <p className="help">
-                            Maximun file size 50 MB.
+                            Maximum file size 50 MB.
                         </p>
                     </div>
                 </div>
