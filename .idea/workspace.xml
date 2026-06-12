@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2d3cc52f-67c5-4c71-9c8f-752bcd71b2ab" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/routes/visualizer.$id.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/Upload.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/constants.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/ui/Button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/Button.tsx" afterDir="false" />
     </list>
@@ -14,8 +18,77 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="30" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.8612674198805181" />
+      <entry key="MS500" value="4.70493852783855" />
+      <entry key="S2" value="9.392766848268991" />
+      <entry key="S5" value="11.773549026006938" />
+      <entry key="S10" value="12.811145861824698" />
+      <entry key="S30" value="13.845779325596373" />
+      <entry key="S60" value="15.045304570614144" />
+      <entry key="M2" value="18.460882190999687" />
+      <entry key="M5" value="28.220148071545967" />
+      <entry key="M10" value="43.20173893381058" />
+      <entry key="M15" value="57.72640854520937" />
+      <entry key="M30" value="88.20559004877616" />
+      <entry key="H1" value="115.47114303188894" />
+      <entry key="H2" value="134.0264640261167" />
+      <entry key="H4" value="144.8960119273102" />
+      <entry key="D1" value="154.89077929985584" />
+      <entry key="W1" value="156.69634719799765" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="5.1855434110799896E-160" />
+      <entry key="S2" value="1.5090324142465151E-40" />
+      <entry key="S5" value="1.1789597769696458E-16" />
+      <entry key="S10" value="1.0975795003421758E-8" />
+      <entry key="S30" value="0.0035126088750739247" />
+      <entry key="S60" value="0.13200020811115046" />
+      <entry key="M2" value="0.976116745260625" />
+      <entry key="M5" value="3.8659624231344742" />
+      <entry key="M10" value="8.7994170736243" />
+      <entry key="M15" value="13.74134921248824" />
+      <entry key="M30" value="24.091371811939304" />
+      <entry key="H1" value="33.245693760869806" />
+      <entry key="H2" value="39.41776984234336" />
+      <entry key="H4" value="43.01303882092573" />
+      <entry key="D1" value="46.30646113493996" />
+      <entry key="W1" value="46.90018630990559" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="1.8111171824741898" />
+      <entry key="MS500" value="4.6360502936019765" />
+      <entry key="S2" value="9.355727735575138" />
+      <entry key="S5" value="11.755589871501266" />
+      <entry key="S10" value="12.80152254401042" />
+      <entry key="S30" value="13.845475326443118" />
+      <entry key="S60" value="15.171480161708002" />
+      <entry key="M2" value="19.421078676676238" />
+      <entry key="M5" value="32.06032743823666" />
+      <entry key="M10" value="51.96826257470556" />
+      <entry key="M15" value="71.43162877468856" />
+      <entry key="M30" value="112.26379610585067" />
+      <entry key="H1" value="148.69354571119527" />
+      <entry key="H2" value="173.43032542179654" />
+      <entry key="H4" value="187.9014374482039" />
+      <entry key="D1" value="201.19587093788897" />
+      <entry key="W1" value="203.5963352745196" />
+    </decayedShown>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4,
@@ -26,27 +99,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "Main",
-    "javascript.preferred.runtime.type.id": "node",
-    "junie.onboarding.icon.badge.shown": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "C:\\Users\\Propietario\\WebstormProjects\\roomify\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;upload-files&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Propietario\\WebstormProjects\\roomify\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -64,7 +139,12 @@
       <workItem from="1781077399925" duration="270000" />
       <workItem from="1781096505255" duration="3021000" />
       <workItem from="1781160043179" duration="3562000" />
-      <workItem from="1781171993994" duration="1420000" />
+      <workItem from="1781171993994" duration="1696000" />
+      <workItem from="1781181879441" duration="197000" />
+      <workItem from="1781182089510" duration="320000" />
+      <workItem from="1781182464352" duration="3220000" />
+      <workItem from="1781195365601" duration="314000" />
+      <workItem from="1781195693533" duration="3088000" />
     </task>
     <servers />
   </component>

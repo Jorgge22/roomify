@@ -2,7 +2,7 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline'; // añade los que necesites
+    variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
     className?: string;
@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
         fullWidth ? 'btn--fullWidth' : '',
         className,
     ]
-        .filter(Boolean) // elimina strings vacíos
+        .filter(Boolean) // delete empty strings
         .join(' ');
 
     return (
