@@ -7,6 +7,11 @@ import {useNavigate} from "react-router";
 import {useState} from "react";
 import {createProject} from "../../lib/puter.action";
 
+/**
+ * Provides page metadata for the home route.
+ *
+ * @returns An array of metadata objects containing the page title and description.
+ */
 export function meta({}: Route.MetaArgs) {
     return [
         {title: "New React Router App"},
@@ -14,6 +19,9 @@ export function meta({}: Route.MetaArgs) {
     ];
 }
 
+/**
+ * Renders the application home page, featuring upload functionality for floor plans and a gallery of user projects.
+ */
 export default function Home() {
     const navigate = useNavigate();
     const [projects, setProjects] = useState<DesignItem[]>([]);
