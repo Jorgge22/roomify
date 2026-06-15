@@ -3,6 +3,28 @@ import {getOrCreateHostingConfig, uploadImageToHosting} from "./puter.hosting";
 import {isHostedUrl} from "./utils";
 import {PUTER_WORKER_URL} from "./constants";
 
+const USE_LOCAL_PROJECTS = import.meta.env.DEV || import.meta.env.VITE_LOCAL_PROJECTS === "true";
+const LOCAL_PROJECTS_KEY = "roomify:projects";
+
+const getLocalProjects = (): DesignItem[] => {
+    if (typeof window === "undefined") return [];
+
+    try {
+        const raw = window.localStorage.getItem(LOCAL_PROJECTS_KEY);
+        const projects = raw ? JSON.parse(raw) : [];
+
+        return Array.isArray(projects) ? projects : [];
+    } catch {
+        return [];
+    }
+}
+
+const setLocalProjects = (projects: DesignItem[]) => {
+    if (typeof window === "undefined") return;
+
+    window.localStorage.setItem(LOCAL_PROJECTS_KEY, JSON.stringify(projects));
+}
+
 export const signIn = async () => await puter.auth.signIn();
 
 export const signOut = () => puter.auth.signOut();
@@ -16,6 +38,20 @@ export const getCurrentUser = async () => {
 }
 
 export const createProject = async ({ item, visibility = "private" }: CreateProjectParams): Promise<DesignItem | null | undefined> => {
+    if (USE_LOCAL_PROJECTS) {
+        const payload = {
+            ...item,
+            isPublic: visibility === "public",
+            timestamp: item.timestamp ?? Date.now(),
+        };
+        const projects = getLocalProjects();
+        const nextProjects = [payload, ...projects.filter((project) => project.id !== payload.id)];
+
+        setLocalProjects(nextProjects);
+
+        return payload;
+    }
+
     if (!PUTER_WORKER_URL) {
         console.warn('Missing VITE_PUTER_WORKER_URL; skip history fetch');
         return null;
@@ -88,6 +124,10 @@ export const createProject = async ({ item, visibility = "private" }: CreateProj
 }
 
 export const getProjects = async () => {
+    if (USE_LOCAL_PROJECTS) {
+        return getLocalProjects();
+    }
+
     if (!PUTER_WORKER_URL) {
         console.warn('Missing VITE_PUTER_WORKER_URL; skip history fetch');
         return [];
@@ -113,6 +153,10 @@ export const getProjects = async () => {
 }
 
 export const getProjectById = async ({ id }: { id: string }) => {
+    if (USE_LOCAL_PROJECTS) {
+        return getLocalProjects().find((project) => project.id === id) ?? null;
+    }
+
     if (!PUTER_WORKER_URL) {
         console.warn("Missing VITE_PUTER_WORKER_URL; skipping project fetch.");
         return null;
@@ -133,12 +177,12 @@ export const getProjectById = async ({ id }: { id: string }) => {
         }
 
         const text = await response.text();
-        if (!text) {
+        if (!text.trim()) {
             console.error("Empty response from server");
             return null;
         }
 
-        const data = (await response.json()) as {
+        const data = JSON.parse(text) as {
             project?: DesignItem | null;
         };
 

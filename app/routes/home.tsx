@@ -43,7 +43,7 @@ export default function Home() {
             navigate(`/visualizer/${newId}`, {
                 state: {
                     initialImage: saved.sourceImage,
-                    initialRenderedImage: saved.renderedImage || null,
+                    initialRender: saved.renderedImage || null,
                     name
                 }
             });
@@ -124,7 +124,12 @@ export default function Home() {
 
                     <div className="projects-grid">
                         {projects.map(({id, name, renderedImage, sourceImage, timestamp}) => (
-                            <div key={id} className="project-card group" onClick={() => navigate(`/visualizer/${id}`)}>
+                            <button
+                              key={id}
+                              type="button"
+                              className="project-card group"
+                              onClick={() => navigate(`/visualizer/${id}`)}
+                            >
                                 <div className="preview">
                                     <img
                                         src={renderedImage || sourceImage}
@@ -151,7 +156,7 @@ export default function Home() {
                                         <ArrowUpRight size={18}/>
                                     </div>
                                 </div>
-                            </div>
+                            </button>
                         ))}
 
                     </div>
