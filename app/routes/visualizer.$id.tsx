@@ -21,7 +21,7 @@ const VisualizerId = () => {
     const handleBack = () => navigate('/');
 
     const runGeneration = async (item: DesignItem) => {
-        if (!id || item.sourceImage) return;
+        if (!id || !item.sourceImage) return;
 
         try {
             setIsProcessing(true);
