@@ -1,4 +1,4 @@
-import {useNavigate, useOutletContext, useParams} from "react-router";
+import {useLocation, useNavigate, useOutletContext, useParams} from "react-router";
 import {useEffect, useRef, useState} from "react";
 import {generate3DView} from "../../lib/ai.action";
 import {Box, Download, RefreshCcw, Share2, X} from "lucide-react";
@@ -7,8 +7,10 @@ import {createProject, getProjectById} from "../../lib/puter.action.tsx";
 
 const VisualizerId = () => {
     const {id} = useParams();
+    const location = useLocation();
     const navigate = useNavigate();
     const {userId} = useOutletContext<AuthContext>();
+    const locationState = location.state as VisualizerLocationState | null;
 
     const hasInitialGenerated = useRef(false);
 
@@ -17,15 +19,22 @@ const VisualizerId = () => {
 
     const [isProcessing, setIsProcessing] = useState(false);
     const [currentImage, setCurrentImage] = useState<string | null>(null);
+    const [renderError, setRenderError] = useState<string | null>(null);
 
     const handleBack = () => navigate('/');
 
+<<<<<<< HEAD
     const runGeneration = async (item: DesignItem) => {
         if (!id || !item.sourceImage) return;
+=======
+    const runGeneration = async (item: DesignItem) => {
+        if (!id || !item.sourceImage) return;
+>>>>>>> 4d585d1 (fix errors)
 
         try {
             setIsProcessing(true);
-            const result = await generate3DView({ sourceImage: item.sourceImage });
+            setRenderError(null);
+            const result = await generate3DView({sourceImage: item.sourceImage});
 
             if (result.renderedImage) {
                 setCurrentImage(result.renderedImage);
@@ -35,11 +44,11 @@ const VisualizerId = () => {
                     renderedImage: result.renderedImage,
                     renderedPath: result.renderedPath,
                     timestamp: Date.now(),
-                    owner: item.ownerId ?? userId ?? null,
+                    ownerId: item.ownerId ?? userId ?? null,
                     isPublic: item.isPublic ?? false,
                 }
 
-                const saved = await createProject({ item: updatedItem, visibility: "private" });
+                const saved = await createProject({item: updatedItem, visibility: "private"});
 
                 if (saved) {
                     setProject(saved);
@@ -48,6 +57,7 @@ const VisualizerId = () => {
             }
         } catch (error) {
             console.error('Generation failed: ', error);
+            setRenderError(error instanceof Error ? error.message : 'AI render failed.');
         } finally {
             setIsProcessing(false);
         }
@@ -64,12 +74,27 @@ const VisualizerId = () => {
 
             setIsProjectLoading(true);
 
+            const fallbackProject = locationState?.initialImage
+                ? {
+                    id,
+                    name: locationState.name ?? `Residence ${id}`,
+                    sourceImage: locationState.initialImage,
+                    renderedImage: locationState.initialRender ?? null,
+                    timestamp: Date.now(),
+                    ownerId: locationState.ownerId ?? userId ?? null,
+                    isPublic: false,
+                    sharedBy: locationState.sharedBy ?? null,
+                }
+                : null;
+
             const fetchedProject = await getProjectById({id});
 
             if (!isMounted) return;
 
-            setProject(fetchedProject);
-            setCurrentImage(fetchedProject?.renderedImage || null);
+            const resolvedProject = fetchedProject ?? fallbackProject;
+
+            setProject(resolvedProject);
+            setCurrentImage(resolvedProject?.renderedImage || null);
             setIsProjectLoading(false);
             hasInitialGenerated.current = false;
         };
@@ -79,7 +104,7 @@ const VisualizerId = () => {
         return () => {
             isMounted = false;
         };
-    }, [id]);
+    }, [id, locationState, userId]);
 
     useEffect(() => {
         if (
@@ -158,6 +183,12 @@ const VisualizerId = () => {
                                     <span className="title">Rendering...</span>
                                     <span className="subtitle">Generating your 3D visualization</span>
                                 </div>
+                            </div>
+                        )}
+
+                        {!isProcessing && renderError && (
+                            <div className="render-error">
+                                {renderError}
                             </div>
                         )}
                     </div>

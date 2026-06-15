@@ -1,6 +1,11 @@
 import {ROOMIFY_RENDER_PROMPT} from "./constants";
 import puter from "@heyputer/puter.js";
 
+const USE_MOCK_AI_RENDER = import.meta.env.DEV || import.meta.env.VITE_MOCK_AI_RENDER === "true";
+const MOCK_RENDER_DELAY_MS = 3500;
+
+const wait = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
+
 export const fetchAsDataUrl = async (url: string): Promise<string> => {
     const response = await fetch(url);
 
@@ -23,18 +28,30 @@ export const generate3DView = async ({ sourceImage }: Generate3DViewParams) => {
         ? sourceImage
         : await fetchAsDataUrl(sourceImage);
 
+    if (USE_MOCK_AI_RENDER) {
+        await wait(MOCK_RENDER_DELAY_MS);
+        return {renderedImage: dataUrl, renderedPath: undefined};
+    }
+
     const base64Data = dataUrl.split(',')[1];
     const mimeType = dataUrl.split(';')[0].split(':')[1];
 
     if(!mimeType || !base64Data) throw new Error(`Invalid source image payload`);
 
-    const response = await puter.ai.txt2img(ROOMIFY_RENDER_PROMPT, {
-        provider: 'gemini',
-        model: 'gemini-2.5-flash-image-preview',
-        input_image: base64Data,
-        input_image_mime_type: mimeType,
-        ratio: { w: 1024, h: 1024 }
-    });
+    let response: unknown;
+
+    try {
+        response = await puter.ai.txt2img(ROOMIFY_RENDER_PROMPT, {
+            provider: 'gemini',
+            model: 'gemini-2.5-flash-image-preview',
+            input_image: base64Data,
+            input_image_mime_type: mimeType,
+            ratio: { w: 1024, h: 1024 }
+        });
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        throw new Error(`AI render failed. Check your Puter/Gemini balance or enable VITE_MOCK_AI_RENDER=true for local development. ${message}`);
+    }
 
     const rawImageUrl = (response as HTMLImageElement).src ?? null;
 

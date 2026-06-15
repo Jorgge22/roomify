@@ -1,4 +1,4 @@
-import React, {use, useCallback, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {useOutletContext} from "react-router";
 import {CheckCircle2, ImageIcon, UploadIcon} from "lucide-react";
 import {PROGRESS_INCREMENT, PROGRESS_INTERVAL_MS, REDIRECT_DELAY_MS} from "../lib/constants";
@@ -11,11 +11,17 @@ const Upload = ({onComplete}: UploadProps) => {
     const [file, setFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [hasMounted, setHasMounted] = useState(false);
 
     const {isSignedIn} = useOutletContext<AuthContext>()
+    const canUpload = hasMounted && (isSignedIn || import.meta.env.DEV);
+
+    useEffect(() => {
+        setHasMounted(true);
+    }, []);
 
     const processFile = useCallback((file: File) => {
-        if (!isSignedIn) return;
+        if (!canUpload) return;
 
         setFile(file);
         setProgress(0);
@@ -39,11 +45,11 @@ const Upload = ({onComplete}: UploadProps) => {
             }, PROGRESS_INTERVAL_MS);
         };
         reader.readAsDataURL(file);
-    }, [isSignedIn, onComplete]);
+    }, [canUpload, onComplete]);
 
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault();
-        if (!isSignedIn) return;
+        if (!canUpload) return;
         setIsDragging(true);
     };
 
@@ -55,7 +61,7 @@ const Upload = ({onComplete}: UploadProps) => {
         e.preventDefault();
         setIsDragging(false);
 
-        if (!isSignedIn) return;
+        if (!canUpload) return;
 
         const droppedFile = e.dataTransfer.files[0];
         if (droppedFile && droppedFile.type.startsWith('image/')) {
@@ -64,7 +70,7 @@ const Upload = ({onComplete}: UploadProps) => {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!isSignedIn) return;
+        if (!canUpload) return;
 
         const selectedFile = e.target.files?.[0];
         if (selectedFile) {
@@ -81,7 +87,6 @@ const Upload = ({onComplete}: UploadProps) => {
                         className="drop-input"
                         accept=".jpg, .jpeg, .png"
                         onChange={handleChange}
-                        disabled={!isSignedIn}
                     />
 
                     <div className="drop-content">
@@ -89,7 +94,7 @@ const Upload = ({onComplete}: UploadProps) => {
                             <UploadIcon size={20}/>
                         </div>
                         <p>
-                            {isSignedIn ? (
+                            {canUpload ? (
                                 "Click to upload or just drag and drop"
                             ) : ("Sign in or sing up with Puter to upload")}
                         </p>
